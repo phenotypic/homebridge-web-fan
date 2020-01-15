@@ -31,6 +31,12 @@ This [homebridge](https://github.com/nfarina/homebridge) plugin exposes a web-ba
 | `name` | Name to appear in the Home app | N/A |
 | `apiroute` | Root URL of your device | N/A |
 
+### Optional fields
+| Key | Description | Default |
+| --- | --- | --- |
+| `rotationSpeed` | Whether to expose rotation speed as a characteristic | `false` |
+| `rotationDirection` | Whether to expose rotation direction as a characteristic | `false` |
+
 ### Additional options
 | Key | Description | Default |
 | --- | --- | --- |
@@ -67,4 +73,14 @@ Your API should be able to:
 1. Update `state` following a manual override by messaging the listen server:
 ```
 /state/INT_VALUE
+```
+
+2. If `rotationSpeed` is enabled, update `rotationSpeed` following a manual override by messaging the listen server:
+```
+/rotationSpeed/INT_VALUE_0_TO_100
+```
+
+3. If `rotationDirection` is enabled, update `rotationDirection` following a manual override by messaging the listen server:
+```
+/rotationDirection/INT_VALUE_0_TO_1
 ```
