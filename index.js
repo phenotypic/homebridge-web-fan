@@ -19,7 +19,10 @@ function WebFan (log, config) {
 
   this.listener = config.listener || false
   this.port = config.port || 2000
-  this.requestArray = ['state']
+  this.requestArray = ['state', 'rotationSpeed', 'rotationDirection']
+
+  this.rotationSpeed = config.rotationSpeed || false
+  this.rotationDirection = config.rotationDirection || false
 
   this.manufacturer = config.manufacturer || packageJson.author.name
   this.serial = config.serial || this.apiroute
@@ -96,6 +99,14 @@ WebFan.prototype = {
         var json = JSON.parse(responseBody)
         this.service.getCharacteristic(Characteristic.On).updateValue(json.currentState)
         this.log('Updated state to: %s', json.currentState)
+        if (this.rotationSpeed) {
+          this.service.getCharacteristic(Characteristic.RotationSpeed).updateValue(json.rotationSpeed)
+          this.log('Updated rotationSpeed to: %s', json.rotationSpeed)
+        }
+        if (this.rotationDirection) {
+          this.service.getCharacteristic(Characteristic.RotationDirection).updateValue(json.rotationDirection)
+          this.log('Updated rotationDirection to: %s', json.rotationDirection)
+        }
         callback()
       }
     }.bind(this))
@@ -105,6 +116,14 @@ WebFan.prototype = {
     switch (characteristic) {
       case 'state':
         this.service.getCharacteristic(Characteristic.On).updateValue(value)
+        this.log('Updated %s to: %s', characteristic, value)
+        break
+      case 'rotationSpeed':
+        this.service.getCharacteristic(Characteristic.RotationSpeed).updateValue(value)
+        this.log('Updated %s to: %s', characteristic, value)
+        break
+      case 'rotationDirection':
+        this.service.getCharacteristic(Characteristic.RotationDirection).updateValue(value)
         this.log('Updated %s to: %s', characteristic, value)
         break
       default:
@@ -128,6 +147,36 @@ WebFan.prototype = {
     }.bind(this))
   },
 
+  setRotationSpeed: function (value, callback) {
+    var url = this.apiroute + '/setRotationSpeed/' + value
+    this.log.debug('Setting rotationSpeed: %s', url)
+
+    this._httpRequest(url, '', this.http_method, function (error, response, responseBody) {
+      if (error) {
+        this.log.warn('Error setting rotationSpeed: %s', error.message)
+        callback(error)
+      } else {
+        this.log('Set rotationSpeed to %s', value)
+        callback()
+      }
+    }.bind(this))
+  },
+
+  setRotationDirection: function (value, callback) {
+    var url = this.apiroute + '/setRotationDirection/' + value
+    this.log.debug('Setting rotationDirection: %s', url)
+
+    this._httpRequest(url, '', this.http_method, function (error, response, responseBody) {
+      if (error) {
+        this.log.warn('Error setting rotationDirection: %s', error.message)
+        callback(error)
+      } else {
+        this.log('Set rotationDirection to %s', value)
+        callback()
+      }
+    }.bind(this))
+  },
+
   getServices: function () {
     this.informationService = new Service.AccessoryInformation()
     this.informationService
@@ -139,6 +188,18 @@ WebFan.prototype = {
     this.service
       .getCharacteristic(Characteristic.On)
       .on('set', this.setOn.bind(this))
+
+    if (this.rotationSpeed) {
+      this.service
+        .getCharacteristic(Characteristic.RotationSpeed)
+        .on('set', this.setRotationSpeed.bind(this))
+    }
+
+    if (this.rotationDirection) {
+      this.service
+        .getCharacteristic(Characteristic.RotationDirection)
+        .on('set', this.setRotationDirection.bind(this))
+    }
 
     this._getStatus(function () {})
 
