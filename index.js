@@ -98,14 +98,14 @@ WebFan.prototype = {
         this.log.debug('Device response: %s', responseBody)
         var json = JSON.parse(responseBody)
         this.service.getCharacteristic(Characteristic.On).updateValue(json.currentState)
-        this.log('Updated state to: %s', json.currentState)
+        this.log.debug('Updated state to: %s', json.currentState)
         if (this.rotationSpeed) {
           this.service.getCharacteristic(Characteristic.RotationSpeed).updateValue(json.rotationSpeed)
-          this.log('Updated rotationSpeed to: %s', json.rotationSpeed)
+          this.log.debug('Updated rotationSpeed to: %s', json.rotationSpeed)
         }
         if (this.rotationDirection) {
           this.service.getCharacteristic(Characteristic.RotationDirection).updateValue(json.rotationDirection)
-          this.log('Updated rotationDirection to: %s', json.rotationDirection)
+          this.log.debug('Updated rotationDirection to: %s', json.rotationDirection)
         }
         callback()
       }
