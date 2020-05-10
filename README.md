@@ -1,6 +1,14 @@
+<p align="center">
+  <a href="https://github.com/homebridge/homebridge"><img src="https://raw.githubusercontent.com/homebridge/branding/master/logos/homebridge-color-round-stylized.png" height="140"></a>
+</p>
+
+<span align="center">
+
 # homebridge-web-fan
 
 [![npm](https://img.shields.io/npm/v/homebridge-web-fan.svg)](https://www.npmjs.com/package/homebridge-web-fan) [![npm](https://img.shields.io/npm/dt/homebridge-web-fan.svg)](https://www.npmjs.com/package/homebridge-web-fan)
+
+</span>
 
 ## Description
 
