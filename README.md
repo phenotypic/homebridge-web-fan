@@ -73,22 +73,22 @@ Your API should be able to:
 
 2. Set the state when it receives:
 ```
-/setState/INT_VALUE
+/setState?value=INT_VALUE
 ```
 
 ### Optional (if listener is enabled)
 
 1. Update `state` following a manual override by messaging the listen server:
 ```
-/state/INT_VALUE
+/state?value=INT_VALUE
 ```
 
 2. If `rotationSpeed` is enabled, update `rotationSpeed` following a manual override by messaging the listen server:
 ```
-/rotationSpeed/INT_VALUE_0_TO_100
+/rotationSpeed?value=INT_VALUE_0_TO_100
 ```
 
 3. If `rotationDirection` is enabled, update `rotationDirection` following a manual override by messaging the listen server:
 ```
-/rotationDirection/INT_VALUE_0_TO_1
+/rotationDirection?value=INT_VALUE_0_TO_1
 ```
