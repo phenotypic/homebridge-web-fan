@@ -1,6 +1,6 @@
 {
   "name": "homebridge-web-fan",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Homebridge plugin for a web-based fan",
   "main": "index.js",
   "dependencies": {
