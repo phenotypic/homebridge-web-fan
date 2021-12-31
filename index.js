@@ -24,7 +24,7 @@ function WebFan (log, config) {
   this.rotationSpeed = config.rotationSpeed || false
   this.rotationDirection = config.rotationDirection || false
 
-  this.manufacturer = config.manufacturer || packageJson.author.name
+  this.manufacturer = config.manufacturer || packageJson.author
   this.serial = config.serial || this.apiroute
   this.model = config.model || packageJson.name
   this.firmware = config.firmware || packageJson.version
