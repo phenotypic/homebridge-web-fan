@@ -95,18 +95,22 @@ WebFan.prototype = {
         callback(error)
       } else {
         this.log.debug('Device response: %s', responseBody)
-        var json = JSON.parse(responseBody)
-        this.service.getCharacteristic(Characteristic.On).updateValue(json.currentState)
-        this.log.debug('Updated state to: %s', json.currentState)
-        if (this.rotationSpeed) {
-          this.service.getCharacteristic(Characteristic.RotationSpeed).updateValue(json.rotationSpeed)
-          this.log.debug('Updated rotationSpeed to: %s', json.rotationSpeed)
+        try {
+          var json = JSON.parse(responseBody)
+          this.service.getCharacteristic(Characteristic.On).updateValue(json.currentState)
+          this.log.debug('Updated state to: %s', json.currentState)
+          if (this.rotationSpeed) {
+            this.service.getCharacteristic(Characteristic.RotationSpeed).updateValue(json.rotationSpeed)
+            this.log.debug('Updated rotationSpeed to: %s', json.rotationSpeed)
+          }
+          if (this.rotationDirection) {
+            this.service.getCharacteristic(Characteristic.RotationDirection).updateValue(json.rotationDirection)
+            this.log.debug('Updated rotationDirection to: %s', json.rotationDirection)
+          }
+          callback()
+        } catch (e) {
+          this.log.warn('Error parsing status: %s', e.message)
         }
-        if (this.rotationDirection) {
-          this.service.getCharacteristic(Characteristic.RotationDirection).updateValue(json.rotationDirection)
-          this.log.debug('Updated rotationDirection to: %s', json.rotationDirection)
-        }
-        callback()
       }
     }.bind(this))
   },
